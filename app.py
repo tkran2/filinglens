@@ -6,6 +6,7 @@ import streamlit as st
 from openai import APIConnectionError, APIStatusError
 
 from filinglens.answer import ROOT, generate_answer
+from filinglens.limits import DemoLimiter
 from filinglens.search import KeywordSearch, load_chunks
 
 REPORT_URL = (
@@ -26,6 +27,11 @@ def get_retriever(index_signature):
     if not chunks:
         raise ValueError("Deployment passages are missing.")
     return KeywordSearch(chunks)
+
+
+@st.cache_resource
+def get_usage_limiter():
+    return DemoLimiter()
 
 
 def report_link(evidence):
@@ -89,6 +95,7 @@ if submitted:
                 st.info("No matching passages were found.")
             else:
                 with st.spinner("Writing an answer from the evidence..."):
+                    get_usage_limiter().acquire()
                     st.session_state["result"] = generate_answer(question, passages)
 
         except APIStatusError as error:
