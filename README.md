@@ -8,6 +8,8 @@ A financial-document research prototype that answers questions about
 Apple's 2024 annual report and displays the retrieved evidence alongside
 page-level citations.
 
+![FilingLens answer alongside cited evidence](docs/demo.png)
+
 ## Features
 
 - PDF ingestion with document hashes and page provenance
