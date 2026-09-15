@@ -7,7 +7,6 @@ from openai import APIConnectionError, APIStatusError
 
 from filinglens.answer import ROOT, generate_answer
 from filinglens.search import KeywordSearch, load_chunks
-from filinglens.semantic import SemanticSearch
 
 REPORT_URL = (
     "https://www.annualreports.com/HostedData/"
@@ -23,9 +22,10 @@ st.set_page_config(
 
 @st.cache_resource
 def get_retriever(index_signature):
-    chunks = load_chunks(ROOT / "data/processed")
-    prepared = SemanticSearch(chunks)
-    return KeywordSearch(prepared.chunks)
+    chunks = load_chunks(ROOT / "assets")
+    if not chunks:
+        raise ValueError("Deployment passages are missing.")
+    return KeywordSearch(chunks)
 
 
 def report_link(evidence):
@@ -73,7 +73,7 @@ if submitted:
         st.warning("Enter a question first.")
     else:
         try:
-            index_files = sorted((ROOT / "data/processed").glob("*.json"))
+            index_files = sorted((ROOT / "assets").glob("*.json"))
             if not index_files:
                 raise ValueError("No documents indexed. Run PDF ingestion first.")
 

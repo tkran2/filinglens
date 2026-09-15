@@ -11,7 +11,6 @@ from openai import OpenAI
 from pydantic import BaseModel
 
 from filinglens.search import KeywordSearch, load_chunks
-from filinglens.semantic import SemanticSearch
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -122,13 +121,12 @@ def main():
     if not args.question.strip():
         parser.error("Question must not be empty.")
 
-    chunks = load_chunks(ROOT / "data/processed")
+    chunks = load_chunks(ROOT / "assets")
     if not chunks:
         parser.error("Ingest a PDF first.")
 
     # Use the same smaller passages as the development benchmark.
-    prepared = SemanticSearch(chunks)
-    retriever = KeywordSearch(prepared.chunks)
+    retriever = KeywordSearch(chunks)
     passages = retriever.search(args.question, top_k=5)
 
     if not passages:
