@@ -34,10 +34,10 @@ jobs:
         run: uv sync --locked --dev
 
       - name: Check formatting
-        run: uv run --locked ruff format --check app.py filinglens tests
+        run: uv run --locked ruff format --check app.py filinglens tests deploy
 
       - name: Lint
-        run: uv run --locked ruff check app.py filinglens tests
+        run: uv run --locked ruff check app.py filinglens tests deploy
 
       - name: Run tests without model downloads or API calls
         run: uv run --locked python -m pytest -q

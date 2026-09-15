@@ -39,7 +39,7 @@ Start the interface:
 
     uv run streamlit run app.py --server.address 127.0.0.1
 
-The embedding model downloads on first use.
+The hosted serving path uses committed passages. Retrieval experiments download the embedding model on first use.
 
 ## Tests and evaluation
 
@@ -78,3 +78,73 @@ Apple Inc., 2024 Form 10-K:
 https://www.annualreports.com/HostedData/AnnualReportArchive/a/NASDAQ_AAPL_2024.pdf
 
 Downloaded documents, generated indexes, and API keys are excluded from Git.
+
+## Answer verification
+
+The generator drafts structured claims with citation IDs. Code checks
+that each claim has citations and that those IDs exist. A second model
+pass reviews each claim against only its cited passages and removes
+claims it judges unsupported.
+
+In one manually inspected deployed example, the verifier retained the
+holiday-demand explanation and removed an unsupported product-launch
+timing claim: two drafted claims became one retained claim.
+
+This is an observed example, not a measured hallucination-reduction rate.
+Both passes use the same model family and can share errors. Citation
+validation and model review do not guarantee factual correctness.
+
+## Hosted architecture
+
+The deployed interface uses prebuilt passages in
+assets/apple-2024-passages.json and BM25 retrieval. It does not load
+PyTorch or the embedding model. Semantic retrieval and hybrid search
+remain available locally for experiments and evaluation.
+
+The answer flow is:
+
+1. Retrieve five passages.
+2. Generate structured claims with citations.
+3. Validate citation IDs.
+4. Review claims against their cited evidence.
+5. Display retained claims alongside source passages.
+
+Supported answers normally require two API requests. Token counts
+include both passes, and reported generation time includes verification.
+
+## Public demo limits
+
+The interface admits up to five questions per minute and 100 per rolling
+24 hours, shared across visitors within one server process. Failed API
+attempts also consume an admission slot.
+
+Limits are thread-safe but process-local. They reset on restart and are
+not a durable billing cap or distributed rate limiter.
+
+## Cloud deployment
+
+Deploy deploy/streamlit_app.py on Streamlit Community Cloud with
+Python 3.12. Its adjacent requirements.txt contains the serving
+dependencies. Configure OPENAI_API_KEY in private app secrets.
+
+For a local launch with the committed passages:
+
+    uv sync --locked
+    cp .env.example .env
+
+Set the key in .env, then run:
+
+    uv run streamlit run app.py --server.address 127.0.0.1
+
+PDF ingestion and embedding-model downloads are only needed when
+rebuilding passages or running retrieval experiments.
+
+## Validation scope
+
+The automated suite currently contains 22 tests covering passage
+splitting, keyword retrieval, rank fusion, citation validation, and
+request admission limits.
+
+These tests do not establish generated-answer accuracy or the verifier's
+semantic correctness. The retrieval benchmark contains eight development
+questions with approximate page labels, not an independent held-out set.
