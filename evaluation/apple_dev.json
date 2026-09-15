@@ -1,0 +1,50 @@
+[
+  {
+    "id": "supply-delays",
+    "question": "How can shortages of customized components affect Apple's business?",
+    "source": "apple-2024.pdf",
+    "relevant_pages": [11]
+  },
+  {
+    "id": "manufacturing-disruption",
+    "question": "What events could interrupt Apple's manufacturing and delivery operations?",
+    "source": "apple-2024.pdf",
+    "relevant_pages": [9, 11]
+  },
+  {
+    "id": "trade-restrictions",
+    "question": "How could tariffs and restrictions on international trade affect Apple?",
+    "source": "apple-2024.pdf",
+    "relevant_pages": [9]
+  },
+  {
+    "id": "license-risk",
+    "question": "What happens if Apple cannot obtain the intellectual property licenses it needs?",
+    "source": "apple-2024.pdf",
+    "relevant_pages": [6, 12]
+  },
+  {
+    "id": "product-defects",
+    "question": "What risks arise from defects in Apple's hardware and software?",
+    "source": "apple-2024.pdf",
+    "relevant_pages": [12]
+  },
+  {
+    "id": "reseller-risk",
+    "question": "How could weakening finances at resellers affect Apple's sales?",
+    "source": "apple-2024.pdf",
+    "relevant_pages": [14]
+  },
+  {
+    "id": "seasonality",
+    "question": "Why does Apple tend to have higher sales in its first fiscal quarter?",
+    "source": "apple-2024.pdf",
+    "relevant_pages": [18]
+  },
+  {
+    "id": "revenue-recognition",
+    "question": "When does Apple recognize revenue from sales of products?",
+    "source": "apple-2024.pdf",
+    "relevant_pages": [38]
+  }
+]
