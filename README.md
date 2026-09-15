@@ -1,5 +1,7 @@
 # FilingLens
 
+**[Open the live demo](https://filinglens-m7yp8jnffuwwzny7jtpmsl.streamlit.app/)**
+
 [![Tests](https://github.com/tkran2/filinglens/actions/workflows/tests.yml/badge.svg)](https://github.com/tkran2/filinglens/actions/workflows/tests.yml)
 
 A financial-document research prototype that answers questions about
