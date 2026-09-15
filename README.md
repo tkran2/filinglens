@@ -1,5 +1,7 @@
 # FilingLens
 
+[![Tests](https://github.com/tkran2/filinglens/actions/workflows/tests.yml/badge.svg)](https://github.com/tkran2/filinglens/actions/workflows/tests.yml)
+
 A financial-document research prototype that answers questions about
 Apple's 2024 annual report and displays the retrieved evidence alongside
 page-level citations.
